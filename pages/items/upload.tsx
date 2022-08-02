@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
+import type { NextPage } from 'next';
 
 const Upload: NextPage = () => {
   return (
-    <div className="px-4 py-16">
+    <div className="px-4 py-10 space-y-5">
       <div>
         <label className="w-full cursor-pointer text-gray-600 hover:border-orange-400 hover:text-orange-400 flex items-center justify-center border-2 border-dashed rounded-lg border-gray-300 h-48">
           <svg
@@ -22,7 +22,7 @@ const Upload: NextPage = () => {
           <input className="hidden" type="file" />
         </label>
       </div>
-      <div className="my-5">
+      <div>
         <label
           className="mb-1 block text-sm font-medium text-gray-700"
           htmlFor="price"
@@ -45,10 +45,14 @@ const Upload: NextPage = () => {
         </div>
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="description"
+          className="mb-1 block text-sm font-medium text-gray-700"
+        >
           Description
         </label>
         <textarea
+          id="description"
           className="mt-1 w-full focus:ring-orange-400 focus:border-orange-400 border-gray-300 rounded-md"
           rows={4}
         />
