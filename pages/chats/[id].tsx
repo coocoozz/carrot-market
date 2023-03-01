@@ -1,29 +1,16 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import Message from "../../components/message";
 
 const ChatDetail: NextPage = () => {
   return (
-    <Layout canGoBack>
+    <Layout canGoBack title="Steve">
       <div className="px-4 space-y-4 pb-16">
-        <div className="flex items-start space-x-2">
-          <div className="w-8 h-8 rounded-full bg-slate-400" />
-          <div className="w-1/2 text-sm text-gray-700 p-2 border rounded-md border-gray-300">
-            <p>Hi how much are you selling them for?</p>
-          </div>
-        </div>
-        <div className="flex flex-row-reverse items-start space-x-2 space-x-reverse">
-          <div className="w-8 h-8 rounded-full bg-slate-400" />
-          <div className="w-1/2 text-sm text-gray-700 p-2 border rounded-md border-gray-300">
-            I want ￦20,000
-          </div>
-        </div>
-        <div className="flex items-start space-x-2">
-          <div className="w-8 h-8 rounded-full bg-slate-400" />
-          <div className="w-1/2 text-sm text-gray-700 p-2 border rounded-md border-gray-300">
-            미쳤어
-          </div>
-        </div>
-        <div className="fixed py-2 bg-white bottom-0 inset-x-0">
+        <Message message="Hi how much are you selling them for?" />
+        <Message message="I want ￦20,000" reversed />
+        <Message message="미쳤어!!!!!!!!!!" />
+
+        <form className="fixed py-2 bg-white bottom-0 inset-x-0">
           <div className="flex relative max-w-md items-center w-full mx-auto">
             <input
               type="text"
@@ -35,7 +22,7 @@ const ChatDetail: NextPage = () => {
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </Layout>
   );

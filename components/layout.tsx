@@ -17,14 +17,9 @@ function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
 
   return (
     <div>
-      <div
-        className={cls(
-          !canGoBack ? "justify-center" : "px-5",
-          "bg-white w-full max-w-xl text-lg font-medium py-3 fixed text-gray-800 border-b top-0 flex items-center"
-        )}
-      >
+      <div className="bg-white w-full h-12 max-w-xl text-lg font-medium fixed text-gray-800 border-b top-0 flex items-center">
         {canGoBack ? (
-          <button onClick={onClick}>
+          <button onClick={onClick} className="absolute left-4">
             <svg
               className="w-7 h-7"
               fill="none"
@@ -41,14 +36,23 @@ function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
             </svg>
           </button>
         ) : null}
-        {title ? <span>{title}</span> : null}
+
+        {title ? <span className="mx-auto">{title}</span> : null}
       </div>
+
       <div className={cls("pt-16", hasTabBar ? "pb-24" : "")}>{children}</div>
 
       {hasTabBar ? (
         <nav className="bg-white w-full max-w-xl text-gray-700 border-t fixed bottom-0 px-10 py-2 flex justify-between items-center">
           <Link href="/">
-            <a className="flex flex-col items-center space-y-2">
+            <a
+              className={cls(
+                "flex flex-col items-center space-y-2",
+                router.pathname === "/"
+                  ? "text-orange-500"
+                  : "hover:text-gray-500 transition-colors"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -68,7 +72,14 @@ function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
           </Link>
 
           <Link href="/community">
-            <a className="flex flex-col items-center space-y-2">
+            <a
+              className={cls(
+                "flex flex-col items-center space-y-2",
+                router.pathname === "/community"
+                  ? "text-orange-500"
+                  : "hover:text-gray-500 transition-colors"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -83,12 +94,19 @@ function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
                   d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
                 ></path>
               </svg>
-              <span>동내생활</span>
+              <span>동네생활</span>
             </a>
           </Link>
 
           <Link href="/chats">
-            <a className="flex flex-col items-center space-y-2">
+            <a
+              className={cls(
+                "flex flex-col items-center space-y-2",
+                router.pathname === "/chats"
+                  ? "text-orange-500"
+                  : "hover:text-gray-500 transition-colors"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -107,8 +125,15 @@ function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
             </a>
           </Link>
 
-          <Link href="/streams">
-            <a className="flex flex-col items-center space-y-2">
+          <Link href="/live">
+            <a
+              className={cls(
+                "flex flex-col items-center space-y-2",
+                router.pathname === "/streams"
+                  ? "text-orange-500"
+                  : "hover:text-gray-500 transition-colors"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -128,7 +153,14 @@ function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
           </Link>
 
           <Link href="/profile">
-            <a className="flex flex-col items-center space-y-2">
+            <a
+              className={cls(
+                "flex flex-col items-center space-y-2",
+                router.pathname === "/profile"
+                  ? "text-orange-500"
+                  : "hover:text-gray-500 transition-colors"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
