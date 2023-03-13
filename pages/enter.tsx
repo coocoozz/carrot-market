@@ -1,12 +1,34 @@
 import { useState } from "react";
-import Button from "../components/button";
-import Input from "../components/input";
-import { cls } from "../libs/utils";
+import { FieldErrors, useForm } from "react-hook-form";
+import Button from "@components/button";
+import Input from "@components/input";
+import useMutation from "@libs/client/useMutation";
+import { cls } from "@libs/client/utils";
+
+interface EnterForm {
+  email?: string;
+  phone?: string;
+}
 
 export default function Enter() {
+  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
+  const { register, reset, handleSubmit } = useForm<EnterForm>();
   const [method, setMethod] = useState<"email" | "phone">("email");
-  const onEmailClick = () => setMethod("email");
-  const onPhoneClick = () => setMethod("phone");
+  const onEmailClick = () => {
+    reset();
+    setMethod("email");
+  };
+  const onPhoneClick = () => {
+    reset();
+    setMethod("phone");
+  };
+  const onValid = (data: EnterForm) => {
+    enter(data);
+  };
+  const onInvalid = (error: FieldErrors) => {
+    console.log(error);
+  };
+
   return (
     <div className="mt-16 px-4">
       <h3 className="text-3xl text-center font-bold">Enter to Carrot</h3>
@@ -38,14 +60,20 @@ export default function Enter() {
             </button>
           </div>
         </div>
-        <form className="flex flex-col mt-8 space-y-4">
+
+        <form
+          className="flex flex-col mt-8 space-y-4"
+          onSubmit={handleSubmit(onValid, onInvalid)}
+        >
           {method === "email" ? (
             <Input
               name="email"
               label="Email address"
               kind="text"
               type="email"
-              required
+              register={register("email", {
+                required: "need to specify email address",
+              })}
             />
           ) : null}
 
@@ -55,12 +83,20 @@ export default function Enter() {
               label="Phone number"
               type="number"
               kind="phone"
-              required
+              register={register("phone", {
+                required: "need to specify phone number",
+              })}
             />
           ) : null}
 
-          {method === "email" ? <Button text="Get login link" /> : null}
-          {method === "phone" ? <Button text="Get one-time password" /> : null}
+          {method === "email" ? (
+            <Button text={loading ? "Submitting..." : "Get login link"} />
+          ) : null}
+          {method === "phone" ? (
+            <Button
+              text={loading ? "Submitting..." : "Get one-time password"}
+            />
+          ) : null}
         </form>
 
         <div className="mt-6">
