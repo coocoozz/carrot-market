@@ -1,8 +1,12 @@
 import FloatingButton from "@components/floating-button";
 import Item from "@components/item";
 import Layout from "@components/layout";
+import useUser from "@libs/client/useUser";
 
 function Home() {
+  const { user, isLoading } = useUser();
+  console.log(user);
+
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col divide-y-[1px] space-y-3 ">
