@@ -10,19 +10,19 @@ type MethodType = "GET" | "POST" | "DELETE";
 type HandlerType = (req: NextApiRequest, res: NextApiResponse) => void;
 
 interface ConfigType {
-  method: MethodType;
+  methods: MethodType[];
   handler: HandlerType;
   isPrivate?: boolean;
 }
 
 export default function withHandler({
-  method,
+  methods,
   handler,
   isPrivate = true,
 }: ConfigType) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
-    if (method !== req.method) {
-      return res.status(405).end();
+    if (req.method && !methods.includes(req.method as any)) {
+      return res.status(405).json({ ok: false });
     } else if (isPrivate && !req.session.user) {
       return res.status(401).json({ ok: false, error: "need to login first" });
     }

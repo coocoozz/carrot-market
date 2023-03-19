@@ -2,22 +2,34 @@ import FloatingButton from "@components/floating-button";
 import Item from "@components/item";
 import Layout from "@components/layout";
 import useUser from "@libs/client/useUser";
+import { Product } from "@prisma/client";
+import useSWR from "swr";
+
+interface ProductWithCount extends Product {
+  _count: {
+    favorites: number;
+  };
+}
+
+interface ProductResponse {
+  ok: boolean;
+  products: ProductWithCount[];
+}
 
 function Home() {
   const { user, isLoading } = useUser();
-  console.log(user);
+  const { data } = useSWR<ProductResponse>("/api/products");
 
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col divide-y-[1px] space-y-3 ">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
+        {data?.products.map((product) => (
           <Item
-            key={i}
-            id={i}
-            title="New iPhone 14"
-            price={95}
-            comments={1}
-            hearts={2}
+            key={product.id}
+            id={product.id}
+            title={product.name}
+            price={product.price}
+            hearts={product._count.favorites}
           />
         ))}
 
