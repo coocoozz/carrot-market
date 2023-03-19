@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 export default function useUser() {
-  const { data, error } = useSWR("/api/users/me");
+  const { data, error, isLoading } = useSWR("/api/users/me");
   const router = useRouter();
   useEffect(() => {
-    if (data && !data.ok) {
+    if (!isLoading && data && !data.ok) {
+      console.log("go to enter");
       router.replace("/enter");
     }
-  }, [router, data]);
+  }, [router, data, isLoading]);
   return { user: data?.profile, isLoading: !data && !error };
 }
